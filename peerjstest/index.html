@@ -7,14 +7,24 @@
     <title>Vite App</title>
   </head>
   <body>
-    <div id="texts"></div>
-    <label for="id-input">Enter peer 1 ID </label>
+    <div id="texts">
+      <h1>Message History</h1>
+    </div>
+
+    <br>
     <button id="create-id">Create ID</button>
     <br><br>
+    <label for="id-input">Enter peer 1 ID </label>
     <input type="text" id="id-input" />
     <br><br>
+
     <label for="text-input">Enter text to send </label>
     <input type="text" id="text-input" />
+    <script type="module" src="/main.js"></script>
+    <br><br>
+    
+    <input type="file" id="file-input" />
+    <button id="send-file">Send File</button>
     <script type="module" src="/main.js"></script>
   </body>
 </html>

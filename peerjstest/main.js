@@ -6,7 +6,8 @@ let inp = document.getElementById("id-input");
 let btn = document.getElementById("create-id");
 let textInp = document.getElementById("text-input");
 let texts = document.getElementById("texts");
-console.log(texts)
+let fileInp = document.getElementById("file-input");
+// console.log(texts)
 
 let peer = null;
 let conn = null;
@@ -22,8 +23,21 @@ btn.addEventListener("click", function () {
       console.log("connection established");
       conn = connection;
       conn.on("data", function (data) {
-        console.log(data);
-        texts.innerHTML += data + "<br>";
+        if (typeof data === "object") {
+          const blob = new Blob([data.file]);//, { type: 'application/octet-stream' });
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = data.filename;
+          link.click();
+          URL.revokeObjectURL(link.href);
+
+
+          console.log(data);
+          console.log(data.filename, data.filetype, data.file);
+        } else if (typeof data === "string") {
+          console.log(data);
+          texts.innerHTML += data + "<br>";
+        }
       });
     });
   });
@@ -47,7 +61,7 @@ inp.addEventListener("keyup", function (event) {
         conn.send('Hello!');
 
         conn.on("data", function (data) {
-          console.log(data);
+          console.log(typeof data, data);
           texts.innerHTML += data + "<br>";
         });
       });
@@ -61,4 +75,18 @@ textInp.addEventListener("keyup", function (event) {
     conn.send(textInp.value);
     textInp.value = "";
   }
+});
+
+fileInp.addEventListener("change", function () {
+  console.log("sending file");
+  console.log(fileInp.files[0])
+  console.log(typeof fileInp.files[0])
+
+  const file = fileInp.files[0]
+
+  conn.send({
+    file: file,
+    filename: file.name,
+    filetype: file.type
+  })
 });
