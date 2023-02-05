@@ -9,7 +9,8 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^4.0.0"
+    "vite": "^4.0.0",
+    "vite-plugin-mkcert": "^1.13.0"
   },
   "dependencies": {
     "peerjs": "^1.4.7"

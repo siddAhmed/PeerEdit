@@ -1,45 +1,62 @@
 import './style.css'
 
-// The usage -
 import { Peer } from "peerjs";
 let inp = document.getElementById("id-input");
 let btn = document.getElementById("create-id");
 let textInp = document.getElementById("text-input");
 let texts = document.getElementById("texts");
 let fileInp = document.getElementById("file-input");
-// console.log(texts)
 
 let peer = null;
 let conn = null;
 
+function handleConnection(conn) {
+  // Handle incoming data
+  conn.on("data", function (data) {
+    if (typeof data === "object") {
+      const blob = new Blob([data.file]);//, { type: 'application/octet-stream' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = data.filename;
+      link.click();
+      URL.revokeObjectURL(link.href);
+
+      console.log(data);
+      console.log(data.filename, data.filetype, data.file);
+    } else if (typeof data === "string") {
+      console.log(data);
+      texts.innerHTML += data + "<br>";
+    }
+  });
+
+
+  // Info logging
+  peer.on("disconnected", function () {
+    console.log("Disconnected from signaling server, attempting to reconnect");
+    peer.reconnect();
+  });
+
+  peer.on("error", function (err) {
+    console.log(err.type, err);
+  });
+};
+ 
 // create a peer with id "teetus"
 btn.addEventListener("click", function () {
-  peer = new Peer("teetus");
+  peer = new Peer("teetus", {
+    host: "siddahmed-super-waddle-x9x66rxxrg6fx7x-9000.preview.app.github.dev", // '206.189.129.113',
+    port: 443,
+    path: '/PeerEdit',
+  });
+
+  peer.on("connection", function (connection) {
+    console.info("connection established with remote peer: " + connection.peer);
+    conn = connection;
+    handleConnection(conn);
+  });
 
   peer.on('open', function (id) {
-    console.log('My peer ID is: ' + id);
-
-    peer.on("connection", function (connection) {
-      console.log("connection established");
-      conn = connection;
-      conn.on("data", function (data) {
-        if (typeof data === "object") {
-          const blob = new Blob([data.file]);//, { type: 'application/octet-stream' });
-          const link = document.createElement('a');
-          link.href = URL.createObjectURL(blob);
-          link.download = data.filename;
-          link.click();
-          URL.revokeObjectURL(link.href);
-
-
-          console.log(data);
-          console.log(data.filename, data.filetype, data.file);
-        } else if (typeof data === "string") {
-          console.log(data);
-          texts.innerHTML += data + "<br>";
-        }
-      });
-    });
+    console.info("Connected to the PeerServer with local id: " + id);
   });
 
 });
@@ -47,26 +64,30 @@ btn.addEventListener("click", function () {
 // register enter key on inp 
 inp.addEventListener("keyup", function (event) {
   if (event.key === "Enter") {
-    peer = new Peer();
-    peer.on('open', function (id) {
-      console.log('My peer ID is: ' + id);
+    peer = new Peer({
+      host: "siddahmed-super-waddle-x9x66rxxrg6fx7x-9000.preview.app.github.dev", // 
+      port: 443,
+      path: '/PeerEdit',
+    });
 
-      // connect to the peer
+    peer.on('open', function (id) {
+      console.info("Connected to the PeerServer with local id: " + id);
+
+      // connect to the remote peer
       console.log("connecting to " + inp.value)
       conn = peer.connect(inp.value);
-      console.log(conn)
 
-      // check for connection then send a message
+      // Check if connection is established and ready-to-use.
       conn.on("open", function () {
+        console.info("connection established with remote peer: " + conn.peer);
         conn.send('Hello!');
 
-        conn.on("data", function (data) {
-          console.log(typeof data, data);
-          texts.innerHTML += data + "<br>";
-        });
+        handleConnection(conn);
       });
     });
-  }
+
+  };
+
 });
 
 textInp.addEventListener("keyup", function (event) {
