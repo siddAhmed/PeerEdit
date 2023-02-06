@@ -43,11 +43,11 @@ function handleConnection(conn) {
  
 // create a peer with id "teetus"
 btn.addEventListener("click", function () {
-  peer = new Peer("teetus", {
-    host: "siddahmed-super-waddle-x9x66rxxrg6fx7x-9000.preview.app.github.dev", // '206.189.129.113',
-    port: 443,
-    path: '/PeerEdit',
-  });
+  peer = new Peer("teetus");//, {
+  //   host: "siddahmed-super-waddle-x9x66rxxrg6fx7x-9000.preview.app.github.dev", // '206.189.129.113',
+  //   port: 443,
+  //   path: '/PeerEdit',
+  // });
 
   peer.on("connection", function (connection) {
     console.info("connection established with remote peer: " + connection.peer);
@@ -64,11 +64,11 @@ btn.addEventListener("click", function () {
 // register enter key on inp 
 inp.addEventListener("keyup", function (event) {
   if (event.key === "Enter") {
-    peer = new Peer({
-      host: "siddahmed-super-waddle-x9x66rxxrg6fx7x-9000.preview.app.github.dev", // 
-      port: 443,
-      path: '/PeerEdit',
-    });
+    peer = new Peer();//{
+    //   host: "siddahmed-super-waddle-x9x66rxxrg6fx7x-9000.preview.app.github.dev", // 
+    //   port: 443,
+    //   path: '/PeerEdit',
+    // });
 
     peer.on('open', function (id) {
       console.info("Connected to the PeerServer with local id: " + id);
