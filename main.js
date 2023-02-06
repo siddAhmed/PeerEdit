@@ -1,11 +1,14 @@
 import './style.css'
 
 import { Peer } from "peerjs";
+import { uniqueNamesGenerator, adjectives, animals } from 'unique-names-generator';
+
 let inp = document.getElementById("id-input");
 let btn = document.getElementById("create-id");
 let textInp = document.getElementById("text-input");
 let texts = document.getElementById("texts");
 let fileInp = document.getElementById("file-input");
+let localPeerId = document.getElementById("local-peer-id");
 
 let peer = null;
 let conn = null;
@@ -40,10 +43,15 @@ function handleConnection(conn) {
     console.log(err.type, err);
   });
 };
- 
-// create a peer with id "teetus"
+
+// create a local peer with randomly generated id
 btn.addEventListener("click", function () {
-  peer = new Peer("teetus");//, {
+  const randomName = uniqueNamesGenerator({
+    dictionaries: [adjectives, animals],
+    separator: '-',
+  }); // big-donkey
+  localPeerId.innerText = randomName;
+  peer = new Peer(randomName);//, {
   //   host: "siddahmed-super-waddle-x9x66rxxrg6fx7x-9000.preview.app.github.dev", // '206.189.129.113',
   //   port: 443,
   //   path: '/PeerEdit',
@@ -64,7 +72,11 @@ btn.addEventListener("click", function () {
 // register enter key on inp 
 inp.addEventListener("keyup", function (event) {
   if (event.key === "Enter") {
-    peer = new Peer();//{
+    const randomName = uniqueNamesGenerator({
+      dictionaries: [adjectives, animals],
+      separator: '-',
+    }); // big-donkey
+    peer = new Peer(randomName);//{
     //   host: "siddahmed-super-waddle-x9x66rxxrg6fx7x-9000.preview.app.github.dev", // 
     //   port: 443,
     //   path: '/PeerEdit',
