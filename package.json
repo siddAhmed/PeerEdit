@@ -14,6 +14,7 @@
     "vite-plugin-mkcert": "^1.13.0"
   },
   "dependencies": {
+    "codemirror": "^6.0.1",
     "peerjs": "^1.4.7",
     "prettier": "^2.8.3",
     "unique-names-generator": "^4.7.1"

@@ -2,9 +2,30 @@ import './style.css'
 
 import { Peer } from "peerjs";
 import { uniqueNamesGenerator, adjectives, animals } from 'unique-names-generator';
-import { prettier } from "prettier";
+import prettier from "prettier/standalone";
+import parserBabel from "https://unpkg.com/prettier@2.8.3/esm/parser-babel.mjs";
+import parserHtml from "https://unpkg.com/prettier@2.8.3/esm/parser-html.mjs";
 
-console.log(prettier);
+import {basicSetup, EditorView} from "codemirror"
+import {keymap} from "@codemirror/view"
+
+function moveToLine(view) {
+  let line = prompt("Which line?")
+  if (!/^\d+$/.test(line) || +line <= 0 || +line > view.state.doc.lines)
+    return false
+  let pos = view.state.doc.line(+line).from
+  view.dispatch({selection: {anchor: pos}, userEvent: "select"})
+  return true
+}
+
+let view = new EditorView({
+  doc: "a\nb\nc\n",
+  extensions: [
+    keymap.of([{key: "Alt-l", run: moveToLine}]),
+    basicSetup,
+  ]
+})
+
 let inp = document.getElementById("id-input");
 let btn = document.getElementById("create-id");
 let textInp = document.getElementById("text-input");
@@ -15,6 +36,9 @@ let textArea = document.getElementById("text-area");
 let sendTextButton = document.getElementById("send-text");
 let languageDropDown = document.getElementById("language-dropdown");
 let prettifyButton = document.getElementById("prettify");
+let form = document.getElementById("text-form");
+
+form.innerHTML = view.dom.innerHTML;
 
 let peer = null;
 let conn = null;
@@ -139,7 +163,10 @@ languageDropDown.addEventListener("change", function () {
 prettifyButton.addEventListener("click", function () {
   const code = textArea.value;
   const language = languageDropDown.value;
-
-  const formattedCode = prettier.format(code, { parser: language });
+  console.log(code, language);
+  const formattedCode = prettier.format(code, {
+    parser: language, 
+    plugins: [parserBabel, parserHtml] 
+  });
   textArea.value = formattedCode;
 });
