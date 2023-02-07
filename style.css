@@ -2,3 +2,20 @@
     border: 2px solid #000000;
     border-radius: 20px;
 }
+
+textarea {
+    width: 60%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    resize: none;
+  }
+
+#local-peer-id {
+    background-color: #000000;
+    color: whitesmoke;
+}

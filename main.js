@@ -2,13 +2,19 @@ import './style.css'
 
 import { Peer } from "peerjs";
 import { uniqueNamesGenerator, adjectives, animals } from 'unique-names-generator';
+import { prettier } from "prettier";
 
+console.log(prettier);
 let inp = document.getElementById("id-input");
 let btn = document.getElementById("create-id");
 let textInp = document.getElementById("text-input");
 let texts = document.getElementById("texts");
 let fileInp = document.getElementById("file-input");
 let localPeerId = document.getElementById("local-peer-id");
+let textArea = document.getElementById("text-area");
+let sendTextButton = document.getElementById("send-text");
+let languageDropDown = document.getElementById("language-dropdown");
+let prettifyButton = document.getElementById("prettify");
 
 let peer = null;
 let conn = null;
@@ -102,12 +108,10 @@ inp.addEventListener("keyup", function (event) {
 
 });
 
-textInp.addEventListener("keyup", function (event) {
-  if (event.key === "Enter") {
-    console.log("sending message")
-    conn.send(textInp.value);
-    textInp.value = "";
-  }
+sendTextButton.addEventListener("click", function (event) {
+  console.log("sending message")
+  conn.send(textArea.value);
+  textArea.value = "";
 });
 
 fileInp.addEventListener("change", function () {
@@ -122,4 +126,20 @@ fileInp.addEventListener("change", function () {
     filename: file.name,
     filetype: file.type
   })
+});
+
+languageDropDown.addEventListener("change", function () {
+  if (languageDropDown.value === "") {
+    prettifyButton.disabled = true;
+  } else {
+    prettifyButton.disabled = false;
+  }
+});
+
+prettifyButton.addEventListener("click", function () {
+  const code = textArea.value;
+  const language = languageDropDown.value;
+
+  const formattedCode = prettier.format(code, { parser: language });
+  textArea.value = formattedCode;
 });
