@@ -1,5 +1,5 @@
 {
-  "name": "peerjstest",
+  "name": "peeredit-react",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,15 +8,21 @@
     "build": "vite build",
     "preview": "vite preview"
   },
-  "devDependencies": {
-    "mkcert": "^1.5.1",
-    "vite": "^4.0.0",
-    "vite-plugin-mkcert": "^1.13.0"
-  },
   "dependencies": {
-    "codemirror": "^6.0.1",
+    "@monaco-editor/react": "^4.4.6",
+    "lodash.debounce": "^4.0.8",
     "peerjs": "^1.4.7",
     "prettier": "^2.8.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "unique-names-generator": "^4.7.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^3.1.0",
+    "mkcert": "^1.5.1",
+    "vite": "^4.2.0",
+    "vite-plugin-mkcert": "^1.13.0"
   }
 }

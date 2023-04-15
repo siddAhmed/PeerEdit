@@ -1,67 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PeerEdit</title>
-</head>
-
-<body>
-  <div id="texts">
-    <h1>Message History</h1>
-  </div>
-
-  <br>
-  <button id="create-id">Create ID</button>
-  => <span id="local-peer-id"></span>
-  or
-  <label for="id-input">Enter peer 1 ID </label>
-  <input type="text" id="id-input" />
-  <br><br>
-
-  <form id="text-form">
-    <!-- <textarea id="text-area">function HelloWorld() {console.log('Hello world')};</textarea> -->
-  </form>
-  <select id="language-dropdown">
-    <option value="">Choose language</option>
-    <option value="flow">flow</option>
-    <option value="babel">babel</option>
-    <option value="babel-flow">babel-flow</option>
-    <option value="babel-ts">babel-ts</option>
-    <option value="typescript">typescript</option>
-    <option value="acorn">acorn</option>
-    <option value="espree">espree</option>
-    <option value="meriyah">meriyah</option>
-    <option value="css">css</option>
-    <option value="less">less</option>
-    <option value="scss">scss</option>
-    <option value="json">json</option>
-    <option value="json5">json5</option>
-    <option value="json-stringify">json-stringify</option>
-    <option value="graphql">graphql</option>
-    <option value="markdown">markdown</option>
-    <option value="mdx">mdx</option>
-    <option value="vue">vue</option>
-    <option value="yaml">yaml</option>
-    <option value="glimmer">glimmer</option>
-    <option value="html">html</option>
-    <option value="angular">angular</option>
-    <option value="lwc">lwc</option>
-    <option value="doc-explorer">doc-explorer</option>
-  </select>
-
-  <button id="prettify" disabled>Prettify</button>
-  <button id="send-text">Send Text</button>
-
-  <!-- <label for="text-input">Enter text to send </label>
-  <input type="text" id="text-input" />
-  <script type="module" src="/main.js"></script> -->
-  <br><br>
-
-  <input type="file" id="file-input" />
-  <button id="send-file">Send File</button>
-  <script type="module" src="/main.js"></script>
-</body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/PeerEditLogo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PeerEdit</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
