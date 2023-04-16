@@ -20,7 +20,7 @@ npm run dev
 ```
 4. Access the application in your browser at http://localhost:3000.
 
-##Features
+## Features
 - **Peer-to-peer communication**: PeerEdit uses Peer.js to allow users to connect with each other and collaborate on coding projects in real-time.
 
 - **Rich text editor**: The built-in Monaco editor for React supports syntax highlighting and suggestions for multiple languages.
