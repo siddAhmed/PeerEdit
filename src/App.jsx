@@ -121,7 +121,7 @@ function App() {
     // Create a new Peer object with the generated ID
     let newPeer = new Peer(id);
     setPeer(newPeer);
-
+    
     // Set up event listeners for the new Peer object
     newPeer.on("connection", function (conn) {
       console.info("connection established with remote peer: " + conn.peer);
@@ -131,6 +131,8 @@ function App() {
     newPeer.on("open", function (id) {
       console.info("Connected to the PeerServer with local id: " + id);
     });
+
+    navigator.clipboard.writeText(id)
   };
 
   // Define a function to handle connecting to a remote peer
@@ -142,7 +144,7 @@ function App() {
 
     // Create a new Peer object with the generated local ID
     let newPeer = new Peer(id);
-    setPeer(newPeer);
+    setPeerId(newPeer.id);
 
     // Set up event listeners for the new Peer object
     // open event is fired when the connection to the PeerServer is established
@@ -217,22 +219,39 @@ function App() {
       <div className="container flex">
         <div className="hero">
           <section className="id-management">
-            <a id="create-id" className="btn" onClick={handleCreateId}>
-              Create ID
-            </a>
-            <label htmlFor="id-input"> or enter first peer's ID: </label>
-            <input
-              type="text"
-              id="id-input"
-              onKeyUp={(e) => {
-                if (e.key === "Enter") {
-                  handleConnectToPeer(e.target.value);
-                }
-              }}
-            />
-            <span id="local-peer-id">Your local peer ID: {peerId}</span>
+            <div className="connection-container">
+              <div className="peer-connection">
+                <a id="create-id" className="btn" onClick={handleCreateId}>
+                  Create ID
+                </a>
+                <label htmlFor="id-input">OR Enter remote peer's ID: </label>
+                <input
+                  type="text"
+                  id="id-input"
+                  onKeyUp={(e) => {
+                    if (e.key === "Enter") {
+                      handleConnectToPeer(e.target.value);
+                    }
+                  }}
+                />
+                {/* <div className="id-input"> */}
+                {/* </div> */}
+              </div>
+              
+              <div className="peer-id-display">
+                  <div className="local-peer-display" hidden={!peerId}>
+                    Local Peer:
+                    <span className="peer-id local-peer-id" onClick={() => {navigator.clipboard.writeText(peerId)}}>{peerId}</span>
+                  </div>
+                  <div className="remote-peer-display" hidden={!conn}>
+                    Remote Peer:
+                    <span className=" peer-id remote-peer-id" onClick={() => {navigator.clipboard.writeText(conn ? conn.peer : "")}}>{conn ? conn.peer : ""}</span>
+                  </div>
+              </div>
+            </div>
           </section>
           <Editor
+            className="editor"
             height="80%"
             language={languages[codeLanguage].monacoValue}
             value={editorValue}
@@ -265,6 +284,9 @@ function App() {
             <a className="btn prettify col" onClick={handlePrettify}>
               Prettify
             </a>
+            <label htmlFor="file-picker" className="custom-file-upload col">
+                Upload File
+            </label>
             <input
               type="file"
               id="file-picker"
@@ -283,8 +305,8 @@ function App() {
           </div>
         </div>
         <div className="chat">
-          <h1>Message History</h1>
           <div id="chat-history">
+            <h1>Message History</h1>
             {messages.map((messageObj, index) => (
               <p
                 key={index}
