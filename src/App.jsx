@@ -10,9 +10,17 @@ import {
   adjectives,
   animals,
 } from "unique-names-generator";
+
+// Need to include parsers explicitly for browswer based prettier 
+// https://prettier.io/docs/en/browser.html
 import prettier from "prettier/standalone";
-import parserBabel from "https://unpkg.com/prettier@2.8.3/esm/parser-babel.mjs";
-import parserHtml from "https://unpkg.com/prettier@2.8.3/esm/parser-html.mjs";
+import parserBabel from "https://unpkg.com/prettier@latest/esm/parser-babel.mjs";
+import parserHtml from "https://unpkg.com/prettier@latest/esm/parser-html.mjs";
+import parserMarkdown from "https://unpkg.com/prettier@latest/esm/parser-markdown.mjs";
+import parserCss from "https://unpkg.com/prettier@latest/esm/parser-postcss.mjs";
+import parserGraphql from "https://unpkg.com/prettier@latest/esm/parser-graphql.mjs";
+import parserTypescript from "https://unpkg.com/prettier@latest/esm/parser-typescript.mjs";
+import parserYaml from "https://unpkg.com/prettier@latest/esm/parser-yaml.mjs";
 
 // Define an array of languages for the language dropdown
 // const languages = [
@@ -44,6 +52,13 @@ import parserHtml from "https://unpkg.com/prettier@2.8.3/esm/parser-html.mjs";
 const languages = {
   "Javascript (Babel)": { parserValue: "babel", monacoValue: "javascript" },
   "HTML": { parserValue: "html", monacoValue: "html" },
+  "CSS": { parserValue: "css", monacoValue: "css" },
+  "SCSS": { parserValue: "scss", monacoValue: "scss" },
+  "Markdown": { parserValue: "markdown", monacoValue: "markdown" },
+  "YAML": { parserValue: "yaml", monacoValue: "yaml" },
+  "GraphQL": { parserValue: "graphql", monacoValue: "graphql" },
+  "JSON": { parserValue: "json", monacoValue: "json" },
+  "TypeScript": { parserValue: "typescript", monacoValue: "typescript" },
 };
 
 
@@ -192,7 +207,9 @@ function App() {
   const handlePrettify = () => {
     let formattedText = prettier.format(editorValue, {
       parser: languages[codeLanguage].parserValue,
-      plugins: [parserBabel, parserHtml],
+      plugins: [
+        parserBabel, parserHtml, parserMarkdown, parserCss, parserGraphql, parserTypescript, parserYaml
+      ],
     });
     // Update the text area value with the formatted text
     setEditorValue(formattedText);

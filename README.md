@@ -1,4 +1,4 @@
-# PeerEdit
+# PeerEdit [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 **Collaborate in real-time with PeerEdit**
 
 PeerEdit is a web app built with React, Monaco editor for React, and Peer.js. It allows users to connect with each other through peer-to-peer communication and collaborate on coding projects in real-time. With a built-in rich text editor that supports syntax highlighting and suggestions, users can send code files and messages to each other, similar to a chat room.
