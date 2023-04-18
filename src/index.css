@@ -1,4 +1,8 @@
-*, *::before, *::after {
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -13,12 +17,14 @@ body {
   /* place-items: center;
   min-width: 320px;
   min-height: 100vh; */
+  color: #2b1c50;
+  background-color: #93BEDF;
+  font-family: 'Roboto', sans-serif;
 }
 
 #root {
   width: 100%;
   height: 100%;
-  border: #646cff solid 2px;
 }
 
 .flex {
@@ -32,14 +38,33 @@ body {
 .container {
   width: 95%;
   height: 100%;
-  border: black solid 2px;
+  margin: 0 auto;
+}
+
+.peer-connection {
   margin: 0 auto;
 }
 
 .hero {
   width: 70%;
   padding: 1em;
-  border: green solid 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.id-management {
+  background-color: #84A07C;
+  padding: 0.5em;
+  border-radius: 5px;
+}
+
+.peer-id {
+  margin-left: 0.5em;
+  color: white;
+  background-color: #BDA0BC;
+  border-radius: 4px;
+  padding: 0.15em;
 }
 
 .text-options {
@@ -48,42 +73,68 @@ body {
   /* margin: 0.5em 0; */
 }
 
-.btn {
-  /* display: inline; */
-  border-radius: 8px;
-  border: 1px solid black;
-  /* padding: 0.6em 1.2em; */
-  font-weight: 500;
-  font-family: inherit;
+#create-id {
+  background-color: #565add;
+}
+
+.editor {
+  margin: 0.5em 0;
+}
+
+#file-picker {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
   cursor: pointer;
-  transition: border-color 0.25s;
+}
+
+.btn, .custom-file-upload {
+  display: inline-block;
+  padding: 0.2em 0.4em;
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 0.15em;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: #FFFFFF;
+  background-color: #3369ff;
+  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
+  text-align: center;
+
+  cursor: pointer;
 }
 
 .chat {
   display: flex;
   flex-direction: column;
-  border: black solid 2px;
-  border-radius: 20px;
   width: 30%;
+  padding: 1em;
 }
 
 .chat-input {
-  border: black solid 2px; 
-  height: 15%;
+  border: black solid 2px;
+  height: 7%;
   border-radius: 15px;
   margin-top: auto;
+  font-size: 1rem;
+  padding:  0.5em;
 }
 
-#chat-history > p {
+h1 {
+  text-align: center;
+}
+
+#chat-history {
+  border-radius: 20px;
+  background-color: #A2708A;
+  height: 100%;
+  margin-bottom: 0.5em;
+}
+
+#chat-history>p {
   max-width: 70%;
-  /* float: right; */
-}
-
-button:hover {
-  border-color: #646cff;
-}
-
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
