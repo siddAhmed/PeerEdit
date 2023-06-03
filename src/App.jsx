@@ -11,7 +11,7 @@ import {
   animals,
 } from "unique-names-generator";
 
-// Need to include parsers explicitly for browswer based prettier 
+// Need to include parsers explicitly for browswer based prettier
 // https://prettier.io/docs/en/browser.html
 import prettier from "prettier/standalone";
 import parserBabel from "https://unpkg.com/prettier@latest/esm/parser-babel.mjs";
@@ -61,13 +61,12 @@ const languages = {
   "TypeScript": { parserValue: "typescript", monacoValue: "typescript" },
 };
 
-
 function App() {
-  const [peerId, setPeerId] = useState("");
+  const [peerId, setPeerId] = useState(undefined);
   const [peer, setPeer] = useState(null);
   const [conn, setConn] = useState(null);
-  const [chatText, setChatText] = useState("Default text");
-  const [messages, setMessages] = useState([{}]);
+  const [chatText, setChatText] = useState(undefined);
+  const [messages, setMessages] = useState([]);
   const [fileState, setFile] = useState(null);
   const [codeLanguage, setCodeLanguage] = useState("Javascript (Babel)");
   const [editorValue, setEditorValue] = useState(
@@ -136,7 +135,7 @@ function App() {
     // Create a new Peer object with the generated ID
     let newPeer = new Peer(id);
     setPeer(newPeer);
-    
+
     // Set up event listeners for the new Peer object
     newPeer.on("connection", function (conn) {
       console.info("connection established with remote peer: " + conn.peer);
@@ -147,7 +146,7 @@ function App() {
       console.info("Connected to the PeerServer with local id: " + id);
     });
 
-    navigator.clipboard.writeText(id)
+    navigator.clipboard.writeText(id);
   };
 
   // Define a function to handle connecting to a remote peer
@@ -179,7 +178,6 @@ function App() {
   };
 
   const handleDataTransfer = (data) => {
-    console.log(`handleDataTransfer has been called with data: ${data.type, data.data}`)
     conn.send(data);
     if (data.type === "code") {
       setEditorValue(""); // clear the text area
@@ -188,19 +186,18 @@ function App() {
         ...prevMessages,
         { text: data.data, isFromRemote: false },
       ]);
-      console.log(
-        "sending message: " + [messages.map((message) => message.text)]
-      );
-      setChatText('')
+      // console.log(
+      //   "sending message: " + [messages.map((message) => message.text)]
+      // );
+      setChatText("");
     } else if (data.type === "file") {
-      console.log("sending file" + data.data);
-      console.log(typeof data.data);
       conn.send({
-        type: "file", data: {
+        type: "file",
+        data: {
           file: data.data,
           filename: data.data.name,
           filetype: data.data.type,
-        }
+        },
       });
     }
   };
@@ -210,7 +207,13 @@ function App() {
     let formattedText = prettier.format(editorValue, {
       parser: languages[codeLanguage].parserValue,
       plugins: [
-        parserBabel, parserHtml, parserMarkdown, parserCss, parserGraphql, parserTypescript, parserYaml
+        parserBabel,
+        parserHtml,
+        parserMarkdown,
+        parserCss,
+        parserGraphql,
+        parserTypescript,
+        parserYaml,
       ],
     });
     // Update the text area value with the formatted text
@@ -219,137 +222,176 @@ function App() {
 
   const handleEditorChange = (value) => {
     setEditorValue(value);
-    console.log("value changed: " + value);
   };
 
   return (
     <>
-      {/* <div className="topnav flex">
-        <a href="#home" className="active">Home</a>
-        <a href="#news">News</a>
-        <a href="#contact">Contact</a>
-        <a href="#about">About</a>
-        <a href="#" className="icon">
-          <i className="fa fa-bars"></i>
+      <nav className="navbar flex">
+        <h1 className="heading">
+          <span className="heading-standout">P</span>eer
+          <span className="heading-standout">E</span>dit
+        </h1>
+        <a href="https://www.linkedin.com/in/siddahmed/" target="_blank">
+          <img src="/public/linkedin.svg" alt="linkedin" className="logo" />
         </a>
-      </div> */}
+        <a href="https://github.com/siddAhmed/PeerEdit" target="_blank">
+          <img src="/public/github.svg" alt="github" className="logo" />
+        </a>
+      </nav>
       <div className="container flex">
-        <div className="hero">
-          <section className="id-management">
-            <div className="connection-container">
-              <div className="peer-connection">
-                <a id="create-id" className="btn" onClick={handleCreateId}>
-                  Create ID
-                </a>
-                <label htmlFor="id-input">OR Enter remote peer's ID: </label>
-                <input
-                  type="text"
-                  id="id-input"
-                  onKeyUp={(e) => {
-                    if (e.key === "Enter") {
-                      handleConnectToPeer(e.target.value);
+        <div className="content flex">
+          <div className="hero">
+            <section className="id-management">
+              <div className="connection-container flex">
+                <div className="peer-connection">
+                  <a
+                    id="create-id"
+                    className="btn"
+                    onClick={handleCreateId}
+                    style={
+                      peerId
+                        ? { pointerEvents: "none" }
+                        : { pointerEvents: "auto" }
                     }
-                  }}
-                />
-                {/* <div className="id-input"> */}
-                {/* </div> */}
-              </div>
-              
-              <div className="peer-id-display">
-                  <div className="local-peer-display" hidden={!peerId}>
-                    Local Peer:
-                    <span className="peer-id local-peer-id" onClick={() => {navigator.clipboard.writeText(peerId)}}>{peerId}</span>
+                  >
+                    Create ID
+                  </a>
+                  <div style={{ margin: "0.2em 0em" }}>OR</div>
+                  <div className="remote-inp-container flex">
+                    <label style={{ display: "block" }} htmlFor="id-input">
+                      Enter remote peer's ID:{" "}
+                    </label>
+                    <input
+                      type="text"
+                      id="id-input"
+                      onKeyUp={(e) => {
+                        if (e.key === "Enter") {
+                          handleConnectToPeer(e.target.value);
+                        }
+                      }}
+                      // disable input if peerId is not a null string i.e. already set
+                      disabled={peerId ? true : false}
+                    />
                   </div>
-                  <div className="remote-peer-display" hidden={!conn}>
-                    Remote Peer:
-                    <span className=" peer-id remote-peer-id" onClick={() => {navigator.clipboard.writeText(conn ? conn.peer : "")}}>{conn ? conn.peer : ""}</span>
+                </div>
+                <div className="peer-id-display">
+                  <div id="id-disp-title">Peer IDs</div>
+                  {/* hidden={!peerId} */}
+                  <div className="local-peer-display">
+                    Local Peer: 
+                    <span
+                      className="peer-id local-peer-id"
+                      onClick={() => {
+                        navigator.clipboard.writeText(peerId);
+                      }}
+                    >
+                      {peerId}
+                      {/* <CopyToClipboard /> */}
+                    </span>
                   </div>
+                  {/* hidden={!conn} */}
+                  <div className="remote-peer-display">
+                    Remote Peer: 
+                    <span
+                      className="peer-id remote-peer-id"
+                      onClick={() => {
+                        navigator.clipboard.writeText(conn ? conn.peer : "");
+                      }}
+                    >
+                      {conn ? conn.peer : undefined}
+                    </span>
+                  </div>
+                </div>
               </div>
-            </div>
-          </section>
-          <Editor
-            className="editor"
-            height="80%"
-            language={languages[codeLanguage].monacoValue}
-            value={editorValue}
-            theme="vs-dark"
-            // debounce function
-            onChange={debounce(handleEditorChange, 250)}
-          />
-          {/* <textarea
-            className="text-area"
-            value={editorValue}
-            onChange={(e) => setEditorValue(e.target.value)}
-          ></textarea> */}
-          <div className="text-options">
-            <select
-              className="language-dropdown col"
-              onChange={(e) => {
-                if (!(e.target.value === "")) {
-                  console.log("language changed: " + e.target.value)
-                  setCodeLanguage(e.target.value)
-                }
-              }}
-            >
-              <option value="">Choose language</option>
-              {Object.keys(languages).map((languageObj) => (
-                <option key={languageObj} value={languageObj}>
-                  {languageObj}
-                </option>
-              ))}
-            </select>
-            <a className="btn prettify col" onClick={handlePrettify}>
-              Prettify
-            </a>
-            <label htmlFor="file-picker" className="custom-file-upload col">
-                Upload File
-            </label>
-            <input
-              type="file"
-              id="file-picker"
-              className="col"
-              onChange={(e) => setFile(e.target.files[0])}
+            </section>
+            <Editor
+              className="editor"
+              style={{ borderRadius: "8px" }}
+              language={languages[codeLanguage].monacoValue}
+              value={editorValue}
+              theme="vs-dark"
+              // debounce function
+              onChange={debounce(handleEditorChange, 250)}
             />
-            <a className="btn send-file col" onClick={() => { handleDataTransfer({ type: 'file', data: fileState }) }}>
-              Send File
-            </a>
-            <a
-              className="btn send-code col"
-              onClick={() => handleDataTransfer({ type: 'code', data: editorValue })}
-            >
-              Send Code
-            </a>
-          </div>
-        </div>
-        <div className="chat">
-          <div id="chat-history">
-            <h1>Message History</h1>
-            {messages.map((messageObj, index) => (
-              <p
-                key={index}
-                style={
-                  messageObj.isFromRemote
-                    ? styles.remotePeerText
-                    : styles.localPeerText
+            <div className="text-options">
+              <select
+                className="language-dropdown col"
+                onChange={(e) => {
+                  if (!(e.target.value === "")) {
+                    setCodeLanguage(e.target.value);
+                  }
+                }}
+              >
+                <option value="">Choose language</option>
+                {Object.keys(languages).map((languageObj) => (
+                  <option key={languageObj} value={languageObj}>
+                    {languageObj}
+                  </option>
+                ))}
+              </select>
+              <a className="btn prettify col" onClick={handlePrettify}>
+                Prettify
+              </a>
+              <label htmlFor="file-picker" className="custom-file-upload col">
+                Upload File
+              </label>
+              <input
+                type="file"
+                id="file-picker"
+                className="col"
+                onChange={(e) => setFile(e.target.files[0])}
+              />
+              <a
+                className="btn send-file col"
+                onClick={() => {
+                  handleDataTransfer({ type: "file", data: fileState });
+                }}
+              >
+                Send File
+              </a>
+              <a
+                className="btn send-code col"
+                onClick={() =>
+                  handleDataTransfer({ type: "code", data: editorValue })
                 }
               >
-                {messageObj.text}
-              </p>
-            ))}
+                Send Code
+              </a>
+            </div>
           </div>
-          <textarea
-            className="chat-input"
-            value={chatText}
-            onChange={(e) => setChatText(e.target.value)}
-            // catch enter key press and send element to handleDataTransfer
-            onKeyUp={(e) => {
-              if (e.key === "Enter") {
-                console.log(`enter key pressed, chatText state: ${chatText}`)
-                setChatText(e.target.value)
-                handleDataTransfer({ type: 'text', data: chatText });
-              }
-            }}
-          ></textarea>
+          <div className="chat">
+            <div id="chat-history">
+              <h2 id="msg-history">Message History</h2>
+              {messages.map((messageObj, index) => (
+                <p
+                  className="message"
+                  key={index}
+                  style={
+                    messageObj.isFromRemote
+                      ? styles.remotePeerText
+                      : styles.localPeerText
+                  }
+                >
+                  {messageObj.text}
+                </p>
+              ))}
+            </div>
+            <input
+              className="chat-input"
+              placeholder={chatText ? "" : "Type your message here..."}
+							disabled={conn ? false : true}
+              value={chatText}
+              onChange={(e) => setChatText(e.target.value)}
+              // catch enter key press and send element to handleDataTransfer
+              onKeyUp={(e) => {
+                if (e.key === "Enter") {
+                  setChatText(e.target.value);
+                  handleDataTransfer({ type: "text", data: chatText });
+                }
+              }}
+              spellCheck="true"
+            ></input>
+          </div>
         </div>
       </div>
     </>
