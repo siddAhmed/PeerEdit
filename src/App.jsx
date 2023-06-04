@@ -63,6 +63,7 @@ const languages = {
 
 function App() {
   const [peerId, setPeerId] = useState(undefined);
+  const [remotePeerId, setRemotePeerId] = useState(undefined);
   const [peer, setPeer] = useState(null);
   const [conn, setConn] = useState(null);
   const [chatText, setChatText] = useState(undefined);
@@ -178,10 +179,8 @@ function App() {
   };
 
   const handleDataTransfer = (data) => {
-    conn.send(data);
-    if (data.type === "code") {
-      setEditorValue(""); // clear the text area
-    } else if (data.type === "text") {
+    if (data.type === "text") {
+      conn.send(data);
       setMessages((prevMessages) => [
         ...prevMessages,
         { text: data.data, isFromRemote: false },
@@ -243,7 +242,7 @@ function App() {
           <div className="hero">
             <section className="id-management">
               <div className="connection-container flex">
-                <div className="peer-connection">
+                <div className="peer-connection flex">
                   <a
                     id="create-id"
                     className="btn"
@@ -256,57 +255,72 @@ function App() {
                   >
                     Create ID
                   </a>
-                  <div style={{ margin: "0.2em 0em" }}>OR</div>
+                  <div>OR</div>
                   <div className="remote-inp-container flex">
                     <label style={{ display: "block" }} htmlFor="id-input">
-                      Enter remote peer's ID:{" "}
+                      Enter remote peer's ID
                     </label>
-                    <input
-                      type="text"
-                      id="id-input"
-                      onKeyUp={(e) => {
-                        if (e.key === "Enter") {
-                          handleConnectToPeer(e.target.value);
+                    <div className="remote-peer-inp-container flex">
+                      <input
+                        type="text"
+                        id="id-input"
+                        onInput={(e) => {
+                          setRemotePeerId(e.target.value);
+                        }}
+                        onKeyUp={(e) => {
+                          console.log(e.key);
+                          if (e.key === "Enter") {
+                            handleConnectToPeer(e.target.value);
+                          }
+                        }}
+                        // disable input if peerId is not a null string i.e. already set
+                        disabled={peerId ? true : false}
+                      />
+                      <img
+                        src="/ok-button.svg"
+                        alt="ok"
+                        onClick={
+                          () => {
+                            handleConnectToPeer(remotePeerId);
+                          }
                         }
-                      }}
-                      // disable input if peerId is not a null string i.e. already set
-                      disabled={peerId ? true : false}
-                    />
+
+                      />
+                    </div>
                   </div>
                 </div>
+
                 <div className="peer-id-display">
                   <div id="id-disp-title">Peer IDs</div>
-                  {/* hidden={!peerId} */}
-                  <div className="local-peer-display">
-                    Local Peer: 
-                    <span
+
+                  <div className="local-peer-display flex">
+                    <div className="local-peer-label peer-label">Local Peer: </div>
+                    <div
                       className="peer-id local-peer-id"
                       onClick={() => {
                         navigator.clipboard.writeText(peerId);
                       }}
                     >
-                      {peerId}
-                      {/* <CopyToClipboard /> */}
-                    </span>
+                      {peerId ? peerId : <i>Waiting for connection...</i>}
+                    </div>
                   </div>
-                  {/* hidden={!conn} */}
-                  <div className="remote-peer-display">
-                    Remote Peer: 
-                    <span
+
+                  <div className="remote-peer-display flex">
+                    <div className="remote-peer-label peer-label">Remote Peer:</div>
+                    <div
                       className="peer-id remote-peer-id"
                       onClick={() => {
                         navigator.clipboard.writeText(conn ? conn.peer : "");
                       }}
                     >
-                      {conn ? conn.peer : undefined}
-                    </span>
+                      {conn ? conn.peer : <i>Waiting for connection...</i>}
+                    </div>
                   </div>
                 </div>
               </div>
             </section>
             <Editor
               className="editor"
-              style={{ borderRadius: "8px" }}
               language={languages[codeLanguage].monacoValue}
               value={editorValue}
               theme="vs-dark"
@@ -379,7 +393,7 @@ function App() {
             <input
               className="chat-input"
               placeholder={chatText ? "" : "Type your message here..."}
-							disabled={conn ? false : true}
+              disabled={conn ? false : true}
               value={chatText}
               onChange={(e) => setChatText(e.target.value)}
               // catch enter key press and send element to handleDataTransfer

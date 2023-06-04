@@ -71,7 +71,6 @@ body {
 .text-options {
   display: flex;
   flex-wrap: wrap;
-  justify-content: start;
 }
 
 select {
@@ -84,10 +83,6 @@ select {
   font-weight: 400;
 }
 
-.col + .col {
-  margin-left: 30px;
-}
-
 .container {
   flex-direction: column;
   width: 95%;
@@ -97,6 +92,8 @@ select {
 
 .peer-connection {
   width: 50%;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 #id-input {
@@ -107,15 +104,20 @@ select {
   width: 50%;
 }
 
+.connection-container {
+  height: 100%;
+}
+
 .peer-id-display {
   width: 50%;
+  height: 100%;
   margin-left: 1em;
 }
 
 #id-disp-title {
   font-size: 1.5rem;
   /* make the font bold */
-  font-weight: 700;
+  font-weight: bold;
   text-align: center;
   color: var(--primary-color);
 }
@@ -124,8 +126,14 @@ select {
   margin: 1em 0;
 }
 
+.peer-label {
+  max-width: 110px;
+}
+
 .remote-peer-display {
   margin-top: 1em;
+  display: flex;
+
 }
 
 /* Chat Section */
@@ -188,13 +196,6 @@ select {
   font-weight: bold;
 }
 
-#create-id {
-  background-color: #97d3c8;
-  margin-left: 0;
-  padding: 0.4em 0.6em;
-  margin: 0.3em 0.3em 0.3em 0em;
-}
-
 .remote-inp-container {
   flex-direction: column;
 }
@@ -204,6 +205,11 @@ select {
   border-radius: 4px;
   padding: 0.4em;
   margin-left: 0.5em;
+}
+
+.peer-label {
+  margin: 0.5em 0;
+  width: 25%;
 }
 
 .editor {
@@ -234,6 +240,15 @@ select {
   background-color: var(--secondary-color);
   box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
   cursor: pointer;
+  flex: 1 0 auto;
+}
+
+#create-id {
+  background-color: #97d3c8;
+  padding: 0.2em 0.2em;
+  margin: 0.3em 0.3em 0.3em 0em;
+  max-width: 150px;
+  max-height: 30px;
 }
 
 h1 {
@@ -258,8 +273,30 @@ h1 {
   }
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 645px) {
   #id-input {
     width: 100%;
+  }
+  .peer-label {
+    width: 100%;
+  }
+
+  .remote-peer-display, .local-peer-display {
+    flex-direction: column;
+    margin: 0.5em 0;
+  }
+
+  .remote-peer-display {
+    margin-bottom: 0;
+  }
+  .peer-id {
+    margin: 0;
+    /* margin-top: 0.5em; */
+    text-align: center;
+    font-size: 0.8rem;
+  }
+
+  #id-disp-title {
+    font-size: 1.2rem;
   }
 }
