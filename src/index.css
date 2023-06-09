@@ -146,7 +146,7 @@ select {
   max-width: 500px;
 }
 
-#msg-history {
+#msg-history-label {
   margin: 0;
   padding: 1em;
   text-align: center;
@@ -155,6 +155,8 @@ select {
 .message {
   padding: 0.5em;
   margin-left: 0.7em;
+  width: fit-content;
+  min-width: 20%;
   max-width: 80%;
   border-radius: 10px;
 }
@@ -170,10 +172,11 @@ select {
 }
 
 #chat-history {
-  border-radius: 20px;
-  background-color: #eacdd2;
+  flex-direction: column;
   height: 100%;
   margin-bottom: 0.5em;
+  background-color: #eacdd2;
+  border-radius: 20px;
 }
 
 #chat-history > p {

@@ -76,9 +76,15 @@ function App() {
   const styles = {
     localPeerText: {
       backgroundColor: "#86BB71",
+      marginLeft: "auto",
+      marginRight: "1em",
+      borderBottomRightRadius: "0%",
     },
     remotePeerText: {
       backgroundColor: "#94C2ED",
+      marginLeft: "1em",
+      marginRight: "auto",
+      borderBottomLeftRadius: "0%",
     },
   };
 
@@ -239,7 +245,7 @@ function App() {
       </nav>
       <div className="container flex">
         <div className="content flex">
-          <div className="hero">
+          <section className="hero">
             <section className="id-management">
               <div className="connection-container flex">
                 <div className="peer-connection flex">
@@ -372,23 +378,25 @@ function App() {
                 Send Code
               </a>
             </div>
-          </div>
-          <div className="chat">
-            <div id="chat-history">
-              <h2 id="msg-history">Message History</h2>
-              {messages.map((messageObj, index) => (
-                <p
-                  className="message"
-                  key={index}
-                  style={
-                    messageObj.isFromRemote
-                      ? styles.remotePeerText
-                      : styles.localPeerText
-                  }
-                >
-                  {messageObj.text}
-                </p>
-              ))}
+          </section>
+          <section className="chat">
+            <div id="chat-history" className="flex">
+              <h2 id="msg-history-label">Message History</h2>
+              <div className="msg-container">
+                {messages.map((messageObj, index) => (
+                  <p
+                    className="message"
+                    key={index}
+                    style={
+                      messageObj.isFromRemote
+                        ? styles.remotePeerText
+                        : styles.localPeerText
+                    }
+                  >
+                    {messageObj.text}
+                  </p>
+                ))}
+              </div>
             </div>
             <input
               className="chat-input"
@@ -405,7 +413,7 @@ function App() {
               }}
               spellCheck="true"
             ></input>
-          </div>
+          </section>
         </div>
       </div>
     </>
