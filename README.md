@@ -18,7 +18,14 @@ npm install
 ```
 3. Start the development server
 ```bash
+# Local Host
 npm run dev
+```
+or
+
+```bash
+# Expose local host to local network & internet
+npm run dev -- --host
 ```
 4. Access the application in your browser at http://localhost:3000.
 
