@@ -2,13 +2,13 @@
 // Need to include parsers explicitly for browswer based prettier
 // https://prettier.io/docs/en/browser.html
 import prettier from "prettier/standalone";
-import parserBabel from "https://unpkg.com/prettier@latest/esm/parser-babel.mjs";
-import parserHtml from "https://unpkg.com/prettier@latest/esm/parser-html.mjs";
-import parserMarkdown from "https://unpkg.com/prettier@latest/esm/parser-markdown.mjs";
-import parserCss from "https://unpkg.com/prettier@latest/esm/parser-postcss.mjs";
-import parserGraphql from "https://unpkg.com/prettier@latest/esm/parser-graphql.mjs";
-import parserTypescript from "https://unpkg.com/prettier@latest/esm/parser-typescript.mjs";
-import parserYaml from "https://unpkg.com/prettier@latest/esm/parser-yaml.mjs";
+import parserBabel from "https://unpkg.com/prettier@latest/plugins/babel.mjs";
+import parserHtml from "https://unpkg.com/prettier@latest/plugins/html.mjs";
+import parserMarkdown from "https://unpkg.com/prettier@latest/plugins/markdown.mjs";
+import parserCss from "https://unpkg.com/prettier@latest/plugins/postcss.mjs";
+import parserGraphql from "https://unpkg.com/prettier@latest/plugins/graphql.mjs";
+import parserTypescript from "https://unpkg.com/prettier@latest/plugins/typescript.mjs";
+import parserYaml from "https://unpkg.com/prettier@latest/plugins/yaml.mjs";
 
 const TextOptions = ({
   languages,
