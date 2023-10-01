@@ -7,9 +7,10 @@ import Chat from "./components/Chat";
 
 function App() {
   const [peerId, setPeerId] = useState(undefined);
-  const [remotePeerId, setRemotePeerId] = useState(undefined);
+  const [remotePeerId, setRemotePeerId] = useState("");
   const [peer, setPeer] = useState(null);
   const [conn, setConn] = useState(null);
+  const [connStatus, setConnStatus] = useState("idle");
   const [chatText, setChatText] = useState("Type your message here...");
   const [messages, setMessages] = useState([]);
   const [fileState, setFile] = useState(null);
@@ -58,6 +59,8 @@ function App() {
             setRemotePeerId={setRemotePeerId}
             connectionObj={conn}
             setConn={setConn}
+            connStatus={connStatus}
+            setConnStatus={setConnStatus}
             handleDataTransfer={handleDataTransfer}
             editorValue={editorValue}
             setEditorValue={setEditorValue}

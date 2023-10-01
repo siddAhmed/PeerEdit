@@ -13,6 +13,8 @@ const Hero = ({
   setRemotePeerId,
   connectionObj,
   setConn,
+  connStatus,
+  setConnStatus,
   handleDataTransfer,
   editorValue,
   setEditorValue,
@@ -47,6 +49,8 @@ const Hero = ({
         setPeerId={setPeerId}
         remotePeerId={remotePeerId}
         connectionObj={connectionObj}
+        connStatus={connStatus}
+        setConnStatus={setConnStatus}
         setConn={setConn}
         setEditorValue={setEditorValue}
         setMessages={setMessages}
@@ -57,18 +61,18 @@ const Hero = ({
         value={editorValue}
         theme="vs-dark"
         // debounce to limit the number of times the editor value is updated
-		// prevents the editor from lagging if the user types too fast
+        // prevents the editor from lagging if the user types too fast
         onChange={debounce(handleEditorChange, 250)}
       />
       <TextOptions
         languages={languages}
-		codeLanguage={codeLanguage}
+        codeLanguage={codeLanguage}
         setCodeLanguage={setCodeLanguage}
-		editorValue={editorValue}
-		setEditorValue={setEditorValue}
-		fileState={fileState}
+        editorValue={editorValue}
+        setEditorValue={setEditorValue}
+        fileState={fileState}
         setFile={setFile}
-		handleDataTransfer={handleDataTransfer}
+        handleDataTransfer={handleDataTransfer}
       />
     </section>
   );

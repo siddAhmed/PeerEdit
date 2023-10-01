@@ -1,3 +1,5 @@
+import { Textarea, Heading } from "@chakra-ui/react";
+
 const styles = {
   localPeerText: {
     backgroundColor: "#86BB71",
@@ -22,8 +24,8 @@ const Chat = ({
 }) => {
   return (
     <section className="chat">
-      <div id="chat-history" className="flex">
-        <h2 id="msg-history-label">Message History</h2>
+      <div id="chat-history" bg="brand.secondary" className="flex">
+        <Heading id="msg-history-label" color="brand.accent" size="lg">Message History</Heading>
         <div className="msg-container">
           {messages.map((messageObj, index) => (
             <p
@@ -40,9 +42,8 @@ const Chat = ({
           ))}
         </div>
       </div>
-      <input
-        className="chat-input"
-        disabled={conn ? false : true}
+      <Textarea
+        isDisabled={conn ? false : true}
         value={chatText}
         onChange={(e) => setChatText(e.target.value)}
         onKeyUp={(e) => {
@@ -57,7 +58,8 @@ const Chat = ({
           }
         }}
         spellCheck="true"
-      ></input>
+        className="chat-input"
+      />
     </section>
   );
 };

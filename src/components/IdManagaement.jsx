@@ -5,6 +5,11 @@ import {
   animals,
 } from "unique-names-generator";
 
+// import CheckMarkLogo from "../assets/check-mark.svg?react";
+import { PiCheckFatBold as CheckMarkLogo } from "react-icons/pi";
+import { AiFillGithub as ghLogo, AiFillLinkedin as linkedinLogo } from "react-icons/ai"
+import { Button, Input, Stack } from "@chakra-ui/react";
+
 const IdManagement = ({
   setPeer,
   peerId,
@@ -12,6 +17,8 @@ const IdManagement = ({
   remotePeerId,
   setRemotePeerId,
   connectionObj,
+  connStatus,
+  setConnStatus,
   setConn,
   setEditorValue,
   setMessages,
@@ -82,6 +89,7 @@ const IdManagement = ({
         setConn(conn);
         handleConnection(conn, newPeer);
         console.info("connection established with remote peer: " + conn.peer);
+        setConnStatus("connected");
         conn.send("Hello!");
       });
     });
@@ -103,6 +111,7 @@ const IdManagement = ({
     newPeer.on("connection", function (conn) {
       console.info("connection established with remote peer: " + conn.peer);
       setConn(conn);
+      setConnStatus("connected");
       handleConnection(conn, newPeer);
     });
     newPeer.on("open", function (id) {
@@ -116,57 +125,88 @@ const IdManagement = ({
     <section className="id-management">
       <div className="connection-container flex">
         <div className="peer-connection flex">
-          <a
+          <Button
+            size="sm"
+            bg="brand.primary"
+            maxWidth="200px"
+            onClick={() => {
+              setConnStatus("connecting");
+              handleCreateId();
+            }}
             id="create-id"
-            className="btn"
-            onClick={handleCreateId}
-            style={
-              peerId ? { pointerEvents: "none" } : { pointerEvents: "auto" }
-            }
           >
             Create ID
-          </a>
+          </Button>
           <div>OR</div>
           <div className="remote-inp-container flex">
             <label style={{ display: "block" }} htmlFor="id-input">
-              Enter remote peer's ID
+              Remote peer ID
             </label>
             <div className="remote-peer-inp-container flex">
-              <input
-                type="text"
-                id="id-input"
-                onInput={(e) => {
-                  // set the remote peer id state continusouly as the user types
-                  // this is to ensure that the remote peer id is always up to date
-                  // and the user can connect to the remote peer by pressing okay button
-                  setRemotePeerId(e.target.value);
-                }}
-                onKeyUp={(e) => {
-                  if (e.key === "Enter") {
-                    handleConnectToPeer(e.target.value);
+              <Stack direction={["column", "row"]} spacing="12px">
+                <Input
+                  size="sm"
+                  type="text"
+                  id="id-input"
+                  onInput={(e) => {
+                    // set the remote peer id state continusouly as the user types
+                    // this is to ensure that the remote peer id is always up to date
+                    // and the user can connect to the remote peer by pressing okay button
+                    setRemotePeerId(e.target.value);
+                  }}
+                  onKeyUp={(e) => {
+                    if (e.key === "Enter") {
+                      handleConnectToPeer(e.target.value);
+                    }
+                  }}
+                  // disable input if peerId is not a null string i.e. already set
+                  isDisabled={peerId ? true : false}
+                  margin="auto 0"
+                />
+                <Button
+                  size="md"
+                  colorScheme="brand"
+                  bg="brand.secondary"
+                  rightIcon={<CheckMarkLogo />}
+                  onClick={() => {
+                    setConnStatus("connecting");
+                    handleConnectToPeer(remotePeerId);
+                  }}
+                  fontSize="0.8rem"
+                  // marginLeft="0.3em"
+                  // marginRight="0.3em"
+                  min-width="45%"
+                  padding="0 1.8em"
+                  isLoading={connStatus === "connecting" ? true : false}
+                  loadingText="Connecting"
+                  variant="outline"
+                  spinnerPlacement="end"
+                  // disable the button if local peer establishes a connection with a remote peer
+                  // or the local peer is the one to create the peer ID
+                  // or remote peer field is empty/undefined
+                  isDisabled={
+                    connStatus === "connected" ||
+                    peerId ||
+                    remotePeerId === ""
+                      ? true
+                      : false
                   }
-                }}
-                // disable input if peerId is not a null string i.e. already set
-                disabled={peerId ? true : false}
-              />
-              <img
-                src="/ok-button.svg"
-                alt="ok"
-                onClick={() => {
-                  handleConnectToPeer(remotePeerId);
-                }}
-              />
+                >
+                  Connect
+                </Button>
+              </Stack>
             </div>
           </div>
         </div>
 
         <div className="peer-id-display">
-          <div id="id-disp-title">Peer IDs</div>
+          <div id="id-disp-title">Peers</div>
 
           <div className="local-peer-display flex">
             <div className="local-peer-label peer-label">Local Peer: </div>
             <div
               className="peer-id local-peer-id"
+              bg="brand.accent"
               onClick={() => {
                 navigator.clipboard.writeText(peerId);
               }}

@@ -1,4 +1,3 @@
-
 // Need to include parsers explicitly for browswer based prettier
 // https://prettier.io/docs/en/browser.html
 import prettier from "prettier/standalone";
@@ -10,13 +9,15 @@ import parserGraphql from "https://unpkg.com/prettier@latest/plugins/graphql.mjs
 import parserTypescript from "https://unpkg.com/prettier@latest/plugins/typescript.mjs";
 import parserYaml from "https://unpkg.com/prettier@latest/plugins/yaml.mjs";
 
+import { Select, Stack, Button } from "@chakra-ui/react";
+
 const TextOptions = ({
   languages,
-	codeLanguage,
+  codeLanguage,
   setCodeLanguage,
-	editorValue,
-	setEditorValue,
-	fileState,
+  editorValue,
+  setEditorValue,
+  fileState,
   setFile,
   handleDataTransfer,
 }) => {
@@ -39,26 +40,32 @@ const TextOptions = ({
   };
 
   return (
-    <div className="text-options">
-      <select
-        className="language-dropdown col"
+    <Stack
+      direction={["column", "row"]}
+      spacing="24px"
+      className="text-options"
+    >
+      <Select
+        width="auto"
+        placeholder="Select Language"
+        // bg="brand.primary"
+        // color="brand.background"
+        border="purple solid 2px"
+        color="purple"
         onChange={(e) => {
           if (!(e.target.value === "")) {
             setCodeLanguage(e.target.value);
           }
         }}
       >
-        <option value="">Choose language</option>
         {Object.keys(languages).map((languageObj) => (
           <option key={languageObj} value={languageObj}>
             {languageObj}
           </option>
         ))}
-      </select>
-      <a className="btn prettify col" onClick={handlePrettify}>
-        Prettify
-      </a>
-      <label htmlFor="file-picker" className="custom-file-upload col">
+      </Select>
+      
+      {/* <label htmlFor="file-picker" className="custom-file-upload col">
         Upload File
       </label>
       <input
@@ -66,22 +73,31 @@ const TextOptions = ({
         id="file-picker"
         className="col"
         onChange={(e) => setFile(e.target.files[0])}
-      />
-      <a
-        className="btn send-file col"
+      /> */}
+
+      {/* <Button
+        colorScheme="purple"
+        variant="outline"
         onClick={() => {
           handleDataTransfer({ type: "file", data: fileState });
         }}
       >
         Send File
-      </a>
-      <a
-        className="btn send-code col"
+      </Button> */}
+      
+      <Button colorScheme="purple" variant="outline" onClick={handlePrettify}>
+        Prettify
+      </Button>
+
+      <Button
+        colorScheme="purple"
+        variant="outline"
         onClick={() => handleDataTransfer({ type: "code", data: editorValue })}
       >
         Send Code
-      </a>
-    </div>
+      </Button>
+
+    </Stack>
   );
 };
 

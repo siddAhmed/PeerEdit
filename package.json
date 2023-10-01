@@ -10,12 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.8.1",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@monaco-editor/react": "^4.5.1",
+    "framer-motion": "^10.16.4",
     "lodash.debounce": "^4.0.8",
     "peerjs": "^1.4.7",
     "prettier": "^2.8.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.11.0",
     "unique-names-generator": "^4.7.1"
   },
   "devDependencies": {
