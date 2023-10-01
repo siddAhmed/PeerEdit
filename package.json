@@ -1,28 +1,31 @@
 {
-  "name": "peeredit-react",
+  "name": "peeredit",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@monaco-editor/react": "^4.4.6",
+    "@monaco-editor/react": "^4.5.1",
     "lodash.debounce": "^4.0.8",
     "peerjs": "^1.4.7",
-    "prettier": "^2.8.3",
+    "prettier": "^2.8.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "unique-names-generator": "^4.7.1"
   },
   "devDependencies": {
-    "@types/react": "^18.0.28",
+    "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
-    "@vitejs/plugin-react": "^3.1.0",
-    "mkcert": "^1.5.1",
-    "vite": "^4.2.0",
-    "vite-plugin-mkcert": "^1.13.0"
+    "@vitejs/plugin-react": "^4.0.0",
+    "eslint": "^8.38.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.3.4",
+    "vite": "^4.3.9"
   }
 }
