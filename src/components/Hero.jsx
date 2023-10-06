@@ -18,8 +18,8 @@ const Hero = ({
   handleDataTransfer,
   editorValue,
   setEditorValue,
-  setFile,
-  fileState,
+  files,
+  setFiles,
   setMessages,
 }) => {
   const [codeLanguage, setCodeLanguage] = useState("Javascript (Babel)");
@@ -70,8 +70,8 @@ const Hero = ({
         setCodeLanguage={setCodeLanguage}
         editorValue={editorValue}
         setEditorValue={setEditorValue}
-        fileState={fileState}
-        setFile={setFile}
+        files={files}
+        setFiles={setFiles}
         handleDataTransfer={handleDataTransfer}
       />
     </section>

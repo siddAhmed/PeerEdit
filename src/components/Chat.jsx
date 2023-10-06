@@ -20,12 +20,21 @@ const Chat = ({
   chatText,
   setChatText,
   messages,
+  files,
+  setFiles,
   handleDataTransfer,
 }) => {
   return (
     <section className="chat">
       <div id="chat-history" bg="brand.secondary" className="flex">
-        <Heading id="msg-history-label" color="brand.accent" size="lg">Message History</Heading>
+        <Heading
+          id="msg-history-label"
+          color="brand.accent"
+          size="lg"
+          className="not-selectable"
+        >
+          Message History
+        </Heading>
         <div className="msg-container">
           {messages.map((messageObj, index) => (
             <p

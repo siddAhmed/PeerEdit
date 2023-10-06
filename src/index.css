@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Train+One&display=swap");
 
 *,
 *::before,
@@ -25,7 +25,7 @@ body {
   flex-direction: column;
 }
 
-/* disable selecting the logo text */
+/* disable selecting any text */
 .not-selectable {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -47,10 +47,11 @@ body {
 .heading {
   width: 100%;
   font-family: "Lobster", cursive;
+  font-family: "Train One", cursive;
   color: var(--chakra-colors-brand-primary);
   margin: 0em;
   text-align: start;
-	font-size: 1.8rem;
+  font-size: 1.8rem;
 }
 
 .heading-standout {
@@ -59,7 +60,7 @@ body {
 
 .navbar > * {
   padding: 0.5em;
-	padding-bottom: 0;
+  padding-bottom: 0;
   margin-bottom: 0;
 }
 
@@ -120,16 +121,28 @@ body {
 .remote-peer-display {
   margin-top: 1em;
   display: flex;
-
 }
 
 /* Chat Section */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+.file-input-container {
+  margin-bottom: 1em;
+  max-height: 20%;
+}
+
+.send-all {
+  width: 100%;
+}
+
 .chat {
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 30%;
-  padding: 1em;
   max-width: 500px;
 }
 
@@ -155,7 +168,7 @@ body {
   background-color: var(--chakra-colors-brand-secondary);
 }
 
-#chat-history>p {
+#chat-history > p {
   max-width: 70%;
 }
 
@@ -254,7 +267,8 @@ h1 {
     width: 100%;
   }
 
-  .remote-peer-display, .local-peer-display {
+  .remote-peer-display,
+  .local-peer-display {
     flex-direction: column;
     margin: 0.5em 0;
   }

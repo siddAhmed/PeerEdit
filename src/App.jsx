@@ -3,7 +3,7 @@ import "./index.css";
 
 import NavBar from "./components/NavBar";
 import Hero from "./components/Hero";
-import Chat from "./components/Chat";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   const [peerId, setPeerId] = useState(undefined);
@@ -13,35 +13,28 @@ function App() {
   const [connStatus, setConnStatus] = useState("idle");
   const [chatText, setChatText] = useState("Type your message here...");
   const [messages, setMessages] = useState([]);
-  const [fileState, setFile] = useState(null);
+  const [files, setFiles] = useState(null);
   const [editorValue, setEditorValue] = useState(
     `function HelloWorld() {console.log('Hello world')};`
   );
 
-  const handleDataTransfer = (data) => {
-    if (data.type === "text") {
-      conn.send(data);
+  const handleDataTransfer = async (dataObj) => {
+    if (dataObj.type === "text") {
+      conn.send(dataObj);
       setMessages((prevMessages) => [
         ...prevMessages,
-        { text: data.data, isFromRemote: false },
+        { text: dataObj.data, isFromRemote: false },
       ]);
       // console.log(
       //   "sending message: " + [messages.map((message) => message.text)]
       // );
       setChatText("");
-    } else if (data.type === "file") {
-      conn.send({
-        type: "file",
-        data: {
-          file: data.data,
-          filename: data.data.name,
-          filetype: data.data.type,
-        },
-      });
-    } else if (data.type === "code") {
+    } else if (dataObj.type === "file") {
+      conn.send(dataObj);
+    } else if (dataObj.type === "code") {
       conn.send({
         type: "code",
-        data: data.data,
+        data: dataObj.data,
       });
     }
   };
@@ -64,15 +57,18 @@ function App() {
             handleDataTransfer={handleDataTransfer}
             editorValue={editorValue}
             setEditorValue={setEditorValue}
-            setFile={setFile}
-            fileState={fileState}
+            files={files}
+            setFiles={setFiles}
             setMessages={setMessages}
           />
-          <Chat
+
+          <Sidebar
             conn={conn}
             chatText={chatText}
             setChatText={setChatText}
             messages={messages}
+            files={files}
+            setFiles={setFiles}
             handleDataTransfer={handleDataTransfer}
           />
         </div>

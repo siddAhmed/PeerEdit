@@ -25,26 +25,21 @@ const IdManagement = ({
 }) => {
   // Handle connection events
   const handleConnection = (conn, localPeer) => {
-    conn.on("data", function (data) {
-      if (data.type === "text") {
+    conn.on("data", function (dataObj) {
+      if (dataObj.type === "text") {
         setMessages((prevMessages) => [
           ...prevMessages,
-          { text: data.data, isFromRemote: true },
+          { text: dataObj.data, isFromRemote: true },
         ]);
-      } else if (data.type === "file") {
-        let file = new Blob([data.data.file]);
+      } else if (dataObj.type === "file") {
         let a = document.createElement("a");
-        a.href = URL.createObjectURL(file);
-        a.download = data.data.filename;
+        a.href = dataObj.data.file;
+        a.download = dataObj.data.fileName;
         a.click();
         URL.revokeObjectURL(a.href);
-        // console.log(
-        //   data.data.filename,
-        //   data.data.filetype,
-        //   data.data.file
-        // );
-      } else if (data.type === "code") {
-        setEditorValue(data.data);
+
+      } else if (dataObj.type === "code") {
+        setEditorValue(dataObj.data);
       }
     });
 
@@ -137,9 +132,9 @@ const IdManagement = ({
           >
             Create ID
           </Button>
-          <div>OR</div>
+          <div className="not-selectable">OR</div>
           <div className="remote-inp-container flex">
-            <label style={{ display: "block" }} htmlFor="id-input">
+            <label style={{ display: "block" }} htmlFor="id-input" className="not-selectable">
               Remote peer ID
             </label>
             <div className="remote-peer-inp-container flex">
@@ -199,7 +194,7 @@ const IdManagement = ({
           </div>
         </div>
 
-        <div className="peer-id-display">
+        <div className="peer-id-display not-selectable">
           <div id="id-disp-title">Peers</div>
 
           <div className="local-peer-display flex">

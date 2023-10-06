@@ -17,8 +17,8 @@ const TextOptions = ({
   setCodeLanguage,
   editorValue,
   setEditorValue,
-  fileState,
-  setFile,
+  files,
+  setFiles,
   handleDataTransfer,
 }) => {
   // Handle prettifying the code in the Editor
@@ -64,26 +64,6 @@ const TextOptions = ({
           </option>
         ))}
       </Select>
-      
-      {/* <label htmlFor="file-picker" className="custom-file-upload col">
-        Upload File
-      </label>
-      <input
-        type="file"
-        id="file-picker"
-        className="col"
-        onChange={(e) => setFile(e.target.files[0])}
-      /> */}
-
-      {/* <Button
-        colorScheme="purple"
-        variant="outline"
-        onClick={() => {
-          handleDataTransfer({ type: "file", data: fileState });
-        }}
-      >
-        Send File
-      </Button> */}
       
       <Button colorScheme="purple" variant="outline" onClick={handlePrettify}>
         Prettify
