@@ -3,16 +3,20 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier) [![Netlify Status](https://api.netlify.com/api/v1/badges/3d025355-529b-4828-ad47-060dd1d69900/deploy-status)](https://app.netlify.com/sites/peeredit/deploys)
 
 **Collaborate in real-time with PeerEdit** 
-PeerEdit is a web app built with React, Monaco editor for React, and Peer.js. It allows users to connect with each other through peer-to-peer communication and collaborate on coding projects in real-time. With a built-in rich text editor that supports syntax highlighting and suggestions, users can send code files and messages to each other, similar to a chat room.
+PeerEdit is a web app built with React, Monaco editor for React, and Peer.js. It allows users to connect with each other through peer-to-peer communication and collaborate in real-time. With a built-in rich text editor that supports syntax highlighting and suggestions, users can send code, files and messages to each other, similar to a chat room.
 
 ## Installation
 To use PeerEdit, follow these steps:
 
 1. Clone the repository to your local machine.
 ```bash
-git clone repo-name
+git clone https://github.com/siddAhmed/PeerEdit.git
 ```
-2. Install the required dependencies
+2. Navigate to the folder 
+```bash
+cd PeerEdit
+```
+3. Install the required dependencies
 ```bash
 npm install
 ```

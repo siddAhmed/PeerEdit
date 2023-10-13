@@ -26,6 +26,7 @@ registerPlugin(
 
 const Sidebar = ({
   conn,
+  connStatus,
   chatText,
   setChatText,
   messages,
@@ -35,17 +36,8 @@ const Sidebar = ({
 }) => {
   const filepondRef = useRef(null);
 
-  const handleDownload = (fileItem) => {
-    let file = new Blob([fileItem.file]);
-    let a = document.createElement("a");
-    a.href = URL.createObjectURL(file);
-    a.download = fileItem.filename;
-    a.click();
-    URL.revokeObjectURL(a.href);
-  };
-
   return (
-    <section className="sidebar">
+    <section className="sidebar flex">
       <div className="file-input-container">
         <FilePond
           className="filepond"
@@ -60,6 +52,7 @@ const Sidebar = ({
           onupdatefiles={setFiles}
           allowMultiple={true}
           maxFiles={10}
+          disabled={connStatus !== "connected"}
           server={{
             process: (
               fieldName,
@@ -99,9 +92,9 @@ const Sidebar = ({
         />
         <Button
           size="sm"
+          isDisabled={connStatus !== "connected"}
           onClick={() => {
             const pondFiles = filepondRef.current.getFiles();
-            // console.log(pondFiles);
             pondFiles.forEach((pondFile) => {
               handleDataTransfer({
                 type: "file",

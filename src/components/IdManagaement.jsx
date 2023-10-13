@@ -7,8 +7,11 @@ import {
 
 // import CheckMarkLogo from "../assets/check-mark.svg?react";
 import { PiCheckFatBold as CheckMarkLogo } from "react-icons/pi";
-import { AiFillGithub as ghLogo, AiFillLinkedin as linkedinLogo } from "react-icons/ai"
-import { Button, Input, Stack } from "@chakra-ui/react";
+import {
+  AiFillGithub as ghLogo,
+  AiFillLinkedin as linkedinLogo,
+} from "react-icons/ai";
+import { Button, Input, Stack, useToast } from "@chakra-ui/react";
 
 const IdManagement = ({
   setPeer,
@@ -23,8 +26,11 @@ const IdManagement = ({
   setEditorValue,
   setMessages,
 }) => {
+  const toast = useToast();
+
   // Handle connection events
   const handleConnection = (conn, localPeer) => {
+    // FIXME receiving huge files causes the app to hang & connection to drop
     conn.on("data", function (dataObj) {
       if (dataObj.type === "text") {
         setMessages((prevMessages) => [
@@ -37,7 +43,6 @@ const IdManagement = ({
         a.download = dataObj.data.fileName;
         a.click();
         URL.revokeObjectURL(a.href);
-
       } else if (dataObj.type === "code") {
         setEditorValue(dataObj.data);
       }
@@ -50,14 +55,14 @@ const IdManagement = ({
 
     // check when the **local** peer is disconneted from the signaling server
     localPeer.on("disconnected", function () {
-      console.log(
+      console.warn(
         "Disconnected from signaling server, attempting to reconnect"
       );
       localPeer.reconnect();
     });
 
     localPeer.on("error", function (err) {
-      console.log(err.type, err);
+      console.error(err.type, err);
     });
   };
 
@@ -91,7 +96,8 @@ const IdManagement = ({
   };
 
   // Handle the "Create ID" button click event
-  const handleCreateId = () => {
+  const handleCreateId = async () => {
+    // TODO make the IDs smaller
     let id = uniqueNamesGenerator({
       dictionaries: [adjectives, animals],
       separator: "-",
@@ -124,17 +130,33 @@ const IdManagement = ({
             size="sm"
             bg="brand.primary"
             maxWidth="200px"
-            onClick={() => {
+            onClick={async () => {
               setConnStatus("connecting");
-              handleCreateId();
+              await handleCreateId();
+              toast({
+                title: "Local peer created.",
+                description: (
+                  <>
+                    We've copied the peer ID for you. <br />
+                    Share it with the remote peer to connect.
+                  </>
+                ),
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+              });
             }}
             id="create-id"
           >
-            Create ID
+            Connect to a peer
           </Button>
           <div className="not-selectable">OR</div>
           <div className="remote-inp-container flex">
-            <label style={{ display: "block" }} htmlFor="id-input" className="not-selectable">
+            <label
+              style={{ display: "block" }}
+              htmlFor="id-input"
+              className="not-selectable"
+            >
               Remote peer ID
             </label>
             <div className="remote-peer-inp-container flex">
@@ -180,9 +202,7 @@ const IdManagement = ({
                   // or the local peer is the one to create the peer ID
                   // or remote peer field is empty/undefined
                   isDisabled={
-                    connStatus === "connected" ||
-                    peerId ||
-                    remotePeerId === ""
+                    connStatus === "connected" || peerId || remotePeerId === ""
                       ? true
                       : false
                   }

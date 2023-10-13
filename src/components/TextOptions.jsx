@@ -9,9 +9,10 @@ import parserGraphql from "https://unpkg.com/prettier@latest/plugins/graphql.mjs
 import parserTypescript from "https://unpkg.com/prettier@latest/plugins/typescript.mjs";
 import parserYaml from "https://unpkg.com/prettier@latest/plugins/yaml.mjs";
 
-import { Select, Stack, Button } from "@chakra-ui/react";
+import { Select, Stack, Button, useToast } from "@chakra-ui/react";
 
 const TextOptions = ({
+  connStatus,
   languages,
   codeLanguage,
   setCodeLanguage,
@@ -39,6 +40,7 @@ const TextOptions = ({
     setEditorValue(formattedText);
   };
 
+  const toast = useToast();
   return (
     <Stack
       direction={["column", "row"]}
@@ -64,7 +66,7 @@ const TextOptions = ({
           </option>
         ))}
       </Select>
-      
+
       <Button colorScheme="purple" variant="outline" onClick={handlePrettify}>
         Prettify
       </Button>
@@ -73,10 +75,26 @@ const TextOptions = ({
         colorScheme="purple"
         variant="outline"
         onClick={() => handleDataTransfer({ type: "code", data: editorValue })}
+        isDisabled={connStatus !== "connected"}
       >
         Send Code
       </Button>
 
+      <Button
+        colorScheme="purple"
+        variant="outline"
+        onClick={async () => {
+          await navigator.clipboard.writeText(editorValue);
+          toast({
+            title: "Code copied to clipboard",
+            status: "success",
+            duration: 3000,
+            position: "bottom-left",
+          });
+        }}
+      >
+        Copy Code
+      </Button>
     </Stack>
   );
 };

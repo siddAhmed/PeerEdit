@@ -25,9 +25,6 @@ function App() {
         ...prevMessages,
         { text: dataObj.data, isFromRemote: false },
       ]);
-      // console.log(
-      //   "sending message: " + [messages.map((message) => message.text)]
-      // );
       setChatText("");
     } else if (dataObj.type === "file") {
       conn.send(dataObj);
@@ -64,6 +61,7 @@ function App() {
 
           <Sidebar
             conn={conn}
+            connStatus={connStatus}
             chatText={chatText}
             setChatText={setChatText}
             messages={messages}

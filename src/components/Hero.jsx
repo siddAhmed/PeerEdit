@@ -65,6 +65,7 @@ const Hero = ({
         onChange={debounce(handleEditorChange, 250)}
       />
       <TextOptions
+        connStatus={connStatus}
         languages={languages}
         codeLanguage={codeLanguage}
         setCodeLanguage={setCodeLanguage}

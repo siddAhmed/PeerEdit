@@ -1,4 +1,4 @@
-import { Textarea, Heading } from "@chakra-ui/react";
+import { Box, Textarea, Heading } from "@chakra-ui/react";
 
 const styles = {
   localPeerText: {
@@ -25,7 +25,7 @@ const Chat = ({
   handleDataTransfer,
 }) => {
   return (
-    <section className="chat">
+    <section className="chat flex">
       <div id="chat-history" bg="brand.secondary" className="flex">
         <Heading
           id="msg-history-label"
@@ -35,7 +35,22 @@ const Chat = ({
         >
           Message History
         </Heading>
-        <div className="msg-container">
+        <Box
+          className="msg-container"
+          overflowY="auto"
+          css={{
+            "&::-webkit-scrollbar": {
+              width: "4px",
+            },
+            "&::-webkit-scrollbar-track": {
+              width: "6px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: "#94C2ED",
+              borderRadius: "24px",
+            },
+          }}
+        >
           {messages.map((messageObj, index) => (
             <p
               className="message"
@@ -49,16 +64,19 @@ const Chat = ({
               {messageObj.text}
             </p>
           ))}
-        </div>
+        </Box>
       </div>
       <Textarea
+        resize={"none"}
         isDisabled={conn ? false : true}
         value={chatText}
         onChange={(e) => setChatText(e.target.value)}
         onKeyUp={(e) => {
           if (e.key === "Enter") {
-            setChatText(e.target.value);
-            handleDataTransfer({ type: "text", data: chatText });
+            if (chatText.trim() !== "") {
+              setChatText(e.target.value);
+              handleDataTransfer({ type: "text", data: chatText });
+            }
           }
         }}
         onClick={(e) => {
