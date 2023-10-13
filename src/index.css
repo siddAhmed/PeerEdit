@@ -135,8 +135,15 @@ body {
 
 .file-input-container {
   margin-bottom: 1em;
-  max-height: 20%;
+}
+
+.filepond--root {
+  max-height: 200px;
+}
+
+.msg-container {
   flex: 1;
+  overflow-y: scroll;
 }
 
 .send-all {
@@ -145,7 +152,7 @@ body {
 
 .chat {
   flex-direction: column;
-  flex: 3;
+  height: 100%;
   max-width: 500px;
   margin-top: auto;
 }
@@ -211,10 +218,6 @@ body {
 
 .editor {
   margin: 0.5em 0;
-}
-
-#file-picker {
-  display: none;
 }
 
 .custom-file-upload {
