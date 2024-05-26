@@ -5,7 +5,7 @@ import NavBar from "./components/NavBar";
 import Hero from "./components/Hero";
 import Sidebar from "./components/Sidebar";
 
-function App() {
+function App({ tour }) {
   const [peerId, setPeerId] = useState(undefined);
   const [remotePeerId, setRemotePeerId] = useState("");
   const [peer, setPeer] = useState(null);
@@ -38,7 +38,7 @@ function App() {
 
   return (
     <>
-      <NavBar />
+      <NavBar tour={tour} />
       <div className="container flex">
         <div className="content flex">
           <Hero

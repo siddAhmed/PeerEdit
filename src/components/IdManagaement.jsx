@@ -181,6 +181,7 @@ const IdManagement = ({
                   margin="auto 0"
                 />
                 <Button
+                  id="connect-btn"
                   size="md"
                   colorScheme="brand"
                   bg="brand.secondary"

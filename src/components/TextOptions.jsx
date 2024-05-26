@@ -48,6 +48,7 @@ const TextOptions = ({
       className="text-options"
     >
       <Select
+        id="language-select"
         width="auto"
         placeholder="Select Language"
         // bg="brand.primary"
@@ -67,7 +68,12 @@ const TextOptions = ({
         ))}
       </Select>
 
-      <Button colorScheme="purple" variant="outline" onClick={handlePrettify}>
+      <Button
+        id="prettify-btn"
+        colorScheme="purple"
+        variant="outline"
+        onClick={handlePrettify}
+      >
         Prettify
       </Button>
 

@@ -1,12 +1,10 @@
-import {
-  AiFillGithub as GhLogo,
-  AiFillLinkedin as LinkedinLogo,
-} from "react-icons/ai";
+import { AiFillGithub as GhLogo } from "react-icons/ai";
 
 import { IconContext } from "react-icons";
+import { TbProgressHelp } from "react-icons/tb";
 import { HStack } from "@chakra-ui/react";
 
-const NavBar = ({}) => {
+const NavBar = ({ tour }) => {
   return (
     <nav className="navbar flex">
       <h1 className="heading not-selectable">
@@ -17,12 +15,14 @@ const NavBar = ({}) => {
       </h1>
       <HStack>
         <IconContext.Provider value={{ color: "white", size: "1.7em" }}>
-          <a href="https://www.linkedin.com/in/siddahmed/" target="_blank">
-            {/* <img src="/linkedin.svg" alt="linkedin" className="logo" /> */}
-            <LinkedinLogo />
-          </a>
+          <TbProgressHelp
+            className="help-icon"
+            title="Replay app tour."
+            onClick={() => {
+              tour.start();
+            }}
+          />
           <a href="https://github.com/siddAhmed/PeerEdit" target="_blank">
-            {/* <img src="/github.svg" alt="github" className="logo" /> */}
             <GhLogo />
           </a>
         </IconContext.Provider>

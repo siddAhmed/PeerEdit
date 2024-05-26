@@ -3,16 +3,17 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
 import { extendTheme, ChakraProvider } from "@chakra-ui/react";
+import Tour from "./components/Tour";
 
-// 2. Extend the theme to include custom colors, fonts, etc
+// Extend the theme to include custom colors, fonts, etc
 const colors = {
-    brand: {
-      text: "#f1f4f2",
-      background: "#121212",
-      primary: "#7cd0c2",
-      secondary: "#182430",
-      accent: "#37c880",
-    },
+  brand: {
+    text: "#f1f4f2",
+    background: "#121212",
+    primary: "#7cd0c2",
+    secondary: "#182430",
+    accent: "#37c880",
+  },
 };
 
 const theme = extendTheme({
@@ -20,7 +21,7 @@ const theme = extendTheme({
     global: () => ({
       body: {
         bg: colors.brand.background,
-        color: colors.brand.text
+        color: colors.brand.text,
       },
     }),
   },
@@ -30,7 +31,13 @@ const theme = extendTheme({
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
-      <App />
+      <App tour={Tour} />
     </ChakraProvider>
   </React.StrictMode>
 );
+
+// Run the tour if it hasn't been seen before
+if (localStorage.getItem("seen_tour") == "null") {
+  Tour.start();
+  localStorage.setItem("seen_tour", "true");
+}
