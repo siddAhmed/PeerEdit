@@ -37,7 +37,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 );
 
 // Run the tour if it hasn't been seen before
-if (localStorage.getItem("seen_tour") == "null") {
+if (localStorage.getItem("seen_tour") === null) {
   Tour.start();
   localStorage.setItem("seen_tour", "true");
 }
