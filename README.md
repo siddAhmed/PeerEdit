@@ -1,9 +1,20 @@
 # PeerEdit 
 
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier) [![Netlify Status](https://api.netlify.com/api/v1/badges/3d025355-529b-4828-ad47-060dd1d69900/deploy-status)](https://app.netlify.com/sites/peeredit/deploys)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier) [![Netlify Status](https://api.netlify.com/api/v1/badges/3d025355-529b-4828-ad47-060dd1d69900/deploy-status)](https://app.netlify.com/sites/peeredit/deploys) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **Collaborate in real-time with PeerEdit** 
-PeerEdit is a web app built with React, Monaco editor for React, and Peer.js. It allows users to connect with each other through peer-to-peer communication and collaborate in real-time. With a built-in rich text editor that supports syntax highlighting and suggestions, users can send code, files and messages to each other, similar to a chat room.
+
+PeerEdit is a web app built with React, Monaco editor, and Peer.js. It allows users to connect with each other through peer-to-peer communication and collaborate in real-time. With a built-in rich text editor that supports syntax highlighting and suggestions, users can send code, files and messages to each other, similar to a chat room.
+
+## Demo
+<p align="center">
+	<a href="https://www.youtube.com/watch?v=5MGJJXucBP4">
+		<img src="https://img.youtube.com/vi/5MGJJXucBP4/0.jpg" alt="PeerEdit YouTube Demo">
+	</a>
+</p>
+
+## Motivation
+The inspiration for PeerEdit came from the constant struggle to share files and code snippets with classmates in computer labs. The process often involved signing in to public computers with WhatsApp or Google accounts, which posed a significant threat to privacy. To address this issue, PeerEdit was created. It allows users to connect peer-to-peer, without any server in between, eliminating the need for any persistent authentication. This ensures a secure and efficient way of sharing and collaborating on code in real-time.
 
 ## Installation
 To use PeerEdit, follow these steps:
