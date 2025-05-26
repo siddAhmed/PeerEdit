@@ -7,7 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "worker:types": "wrangler types  --cwd worker",
+    "worker:check-types": "tsc --project worker/tsconfig.json",
+    "worker:dev": "npm run worker:types && wrangler dev --cwd worker",
+    "worker:deploy": "npm run worker:types && npm run worker:check-types && wrangler deploy --cwd worker",
+    "worker:test": "vitest"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.1",
@@ -36,6 +41,10 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
-    "vite": "^4.5.3"
+    "vite": "^4.5.3",
+    "@cloudflare/vitest-pool-workers": "^0.8.19",
+    "typescript": "^5.5.2",
+    "vitest": "~3.0.7",
+    "wrangler": "^4.16.1"
   }
 }
