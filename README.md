@@ -6,13 +6,6 @@
 
 PeerEdit is a web app built with React, Monaco editor, and Peer.js. It allows users to connect with each other through peer-to-peer communication and collaborate in real-time. With a built-in rich text editor that supports syntax highlighting and suggestions, users can send code, files and messages to each other, similar to a chat room.
 
-## Demo
-<p align="center">
-	<a href="https://www.youtube.com/watch?v=5MGJJXucBP4">
-		<img src="https://img.youtube.com/vi/5MGJJXucBP4/0.jpg" alt="PeerEdit YouTube Demo">
-	</a>
-</p>
-
 ## Motivation
 The inspiration for PeerEdit came from the constant struggle to share files and code snippets with classmates in computer labs. The process often involved signing in to public computers with WhatsApp or Google accounts, which posed a significant threat to privacy. To address this issue, PeerEdit was created. It allows users to connect peer-to-peer, without any server in between, eliminating the need for any persistent authentication. This ensures a secure and efficient way of sharing and collaborating on code in real-time.
 
@@ -54,6 +47,21 @@ npm run dev -- --host
 - **Chat room**: Users can send short text messages to each other, similar to a chat room.
 
 - **Code formatting**: PeerEdit uses prettify.js to allow users to format their code in multiple languages.
+
+- **TURN server failsafe**: If a direct peer-to-peer connection cannot be established, PeerEdit automatically uses TURN servers for reliable connectivity. Temporary, secure TURN credentials are generated on demand using Cloudflare Workers, ensuring privacy and seamless collaboration even in restrictive network environments.
+
+## TURN Server Integration with Cloudflare Workers
+
+PeerEdit is designed to work fully peer-to-peer, but in cases where a direct connection cannot be established (e.g., due to NAT or firewall restrictions), it uses TURN servers to relay traffic. To provide secure, temporary TURN credentials without a central server, PeerEdit leverages [Cloudflare Workers](https://developers.cloudflare.com/workers/), which are serverless functions deployed at the edge.
+
+**How it works:**
+- When a new room is created, the frontend makes a request to the deployed Cloudflare Worker endpoint.
+- The worker generates time-limited TURN credentials using Cloudflare's API and returns them to the requesting client.
+- The client uses these credentials to connect to the TURN server if a direct peer-to-peer connection cannot be established.
+
+This approach ensures that TURN credentials are never hardcoded or exposed, and are only valid for a short period, improving both security and reliability.
+
+For more details or to customize the worker, see the `/worker` directory in this repository.
 
 ## Contributing
 Contributions to PeerEdit are welcome and encouraged! If you would like to contribute to the project, please follow these steps:
